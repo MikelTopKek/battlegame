@@ -1,26 +1,26 @@
-from countries import Country
+class Storage:
+    armies: list
+    humans: list
+    tanks: list
+    human_squads: list
+    tank_squads: list
 
+    @classmethod
+    def get_elem_by_index(cls, index: int, elem_type: str) -> list:
+        list_data = ...  # TODO:::this data should depends on the elem_type
 
-def singleton(class_):
-    instances = {}
+        # return list(filter(lambda x: x.index == index, list_data))
+        # the same here \/
+        def filter_rule(x):
+            return x.index == index
 
-    def get_instance(*args, **kwargs):
-        if class_ not in instances:
-            instances[class_] = class_(*args, **kwargs)
-        return instances[class_]
+        return list(filter(filter_rule, list_data))
 
-    return get_instance
-
-
-@singleton
-class Storage(Country):
-
-    def __init__(self):
-        self.countries = list()
-        self.tankSquads = list()
-        self.humanSquads = list()
-        self.tanks = list()
-        self.humans = list()
-        self.armies = list()
-
-
+    @classmethod
+    def get_humans_by_squad(cls, squad_index: int) -> list:
+        return list(
+            filter(
+                lambda x: x.squad_index == squad_index,
+                cls.humans
+            )
+        )
