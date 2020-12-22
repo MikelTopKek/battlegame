@@ -30,14 +30,14 @@ class BattleUnit(BaseUnit):
 
 
 # Concrete Factory2
-class SquadUnit(BattleUnit):
+class SquadUnit(BaseUnit):
+    army_index: int
 
-    # def __init__(self):
-    #     self.armyIndex = None
-    #     self.unitType = None
+    def __init__(self, index: int, army_index: int):
+        super(SquadUnit, self).__init__(index)
 
-    def create_squad_human(self) -> HumanSquad:
-        return HumansSquad
+        self.army_index = army_index
 
-    def create_squad_tank(self) -> TankSquad:
-        return TanksSquad
+    def attack(self, index, class_type):
+        # TODO:::implement feature
+        pass
