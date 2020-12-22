@@ -1,6 +1,4 @@
 from abc import ABC, abstractmethod
-from units import *
-from squads import *
 
 
 # Abstract Factory
@@ -8,30 +6,27 @@ class BaseUnit(ABC):
     status: int
     index: int
 
-    def __init__(self, index):
+    def __init__(self, index: int):
         self.index = index
 
     @abstractmethod
-    def attack(self):
+    def attack(self, *args, **kwargs):
         pass
 
 
 # Concrete Factory1
 class BattleUnit(BaseUnit):
+    health_points: int
+    damage: int
 
-    # def __init__(self):
-    #     self.damage = None
-    #     self.healthPoints = None
-    #     self.squadIndex = None
+    def __init__(self, index: int, squad_index: int):
+        super(BattleUnit, self).__init__(index)
 
-    def attack(self, country_index):
+        self.squad_index = squad_index
+
+    def attack(self, index, class_type):
+        # TODO:::implement feature
         pass
-
-    def create_human(self) -> Human:
-        return Humans()
-
-    def create_tank(self) -> Tank:
-        return Tanks()
 
 
 # Concrete Factory2
