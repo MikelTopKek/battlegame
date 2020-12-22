@@ -19,7 +19,7 @@ class BattleUnit(BaseUnit):
     health_points: int
     damage: int
 
-    def __init__(self, index: int, squad_index: int):
+    def __init__(self, index: int, squad_index: int = None):
         super(BattleUnit, self).__init__(index)
 
         self.squad_index = squad_index

@@ -1,19 +1,22 @@
-from baseunit import *
+import random
+
+from baseunit import BattleUnit
+
 
 # Abstract product 1.1
-class Human(ABC):
+class Human(BattleUnit):
+    health_points = 100
+    damage = random.randint(30, 50)
 
-    @abstractmethod
-    def abs_func_abstract_unit_human(self) -> str:
-        pass
 
+human1 = Human(
+    index=1,
+    squad_index=None
+)
 
 # Abstract product 1.2
-class Tank(ABC):
-
-    @abstractmethod
-    def abs_func_abstract_unit_tank(self) -> str:
-        pass
+class Tank:
+    pass
 
 
 # Concrete product 1.1
