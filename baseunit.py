@@ -1,59 +1,43 @@
 from abc import ABC, abstractmethod
-from units import *
-from squads import *
 
 
 # Abstract Factory
 class BaseUnit(ABC):
+    status: int
+    index: int
 
-    # def __init__(self):
-    #     self.status = None
-    #     self.index = None
-
-    @abstractmethod
-    def create_human_unit(self) -> Human:
-        pass
+    def __init__(self, index: int):
+        self.index = index
 
     @abstractmethod
-    def create_human_squad(self) -> HumanSquad:
-        pass
-
-    @abstractmethod
-    def create_tank_unit(self) -> Tank:
-        pass
-
-    @abstractmethod
-    def create_tank_squad(self) -> TankSquad:
+    def attack(self, *args, **kwargs):
         pass
 
 
 # Concrete Factory1
 class BattleUnit(BaseUnit):
+    health_points: int
+    damage: int
 
-    # def __init__(self):
-    #     self.damage = None
-    #     self.healthPoints = None
-    #     self.squadIndex = None
+    def __init__(self, index: int, squad_index: int):
+        super(BattleUnit, self).__init__(index)
 
-    def attack(self, country_index):
+        self.squad_index = squad_index
+
+    def attack(self, index, class_type):
+        # TODO:::implement feature
         pass
-
-    def create_human(self) -> Human:
-        return Humans()
-
-    def create_tank(self) -> Tank:
-        return Tanks()
 
 
 # Concrete Factory2
-class SquadUnit(BattleUnit):
+class SquadUnit(BaseUnit):
+    army_index: int
 
-    # def __init__(self):
-    #     self.armyIndex = None
-    #     self.unitType = None
+    def __init__(self, index: int, army_index: int):
+        super(SquadUnit, self).__init__(index)
 
-    def create_squad_human(self) -> HumanSquad:
-        return HumansSquad
+        self.army_index = army_index
 
-    def create_squad_tank(self) -> TankSquad:
-        return TanksSquad
+    def attack(self, index, class_type):
+        # TODO:::implement feature
+        pass
