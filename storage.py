@@ -1,9 +1,9 @@
 class Storage:
-    armies: list
-    humans: list
-    tanks: list
-    human_squads: list
-    tank_squads: list
+    armies: list = list()
+    humans = list()
+    tanks = list()
+    human_squads = list()
+    tank_squads = list()
 
     @classmethod
     def get_elem_by_index(cls, index: int, elem_type: str) -> list:

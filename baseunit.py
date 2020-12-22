@@ -9,6 +9,9 @@ class BaseUnit(ABC):
     def __init__(self, index: int):
         self.index = index
 
+    def __repr__(self):
+        return self.__str__()
+
     @abstractmethod
     def attack(self, *args, **kwargs):
         pass
