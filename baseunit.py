@@ -5,25 +5,14 @@ from squads import *
 
 # Abstract Factory
 class BaseUnit(ABC):
+    status: int
+    index: int
 
-    # def __init__(self):
-    #     self.status = None
-    #     self.index = None
-
-    @abstractmethod
-    def create_human_unit(self) -> Human:
-        pass
+    def __init__(self, index):
+        self.index = index
 
     @abstractmethod
-    def create_human_squad(self) -> HumanSquad:
-        pass
-
-    @abstractmethod
-    def create_tank_unit(self) -> Tank:
-        pass
-
-    @abstractmethod
-    def create_tank_squad(self) -> TankSquad:
+    def attack(self):
         pass
 
 
