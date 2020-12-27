@@ -13,7 +13,7 @@ class HumanSquad(SquadUnit):
         self.damage = random.randint(30, 50)
 
     def __str__(self):
-        return f'<Human[{self.index}]: ' \
+        return f'<HumanSquad[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage}>'
 
@@ -27,6 +27,6 @@ class TankSquad(SquadUnit):
         self.damage = random.randint(80, 120)
 
     def __str__(self):
-        return f'<Tank[{self.index}: ' \
+        return f'<TankSquad[{self.index}: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage}>'
