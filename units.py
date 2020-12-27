@@ -1,34 +1,45 @@
-from baseunit import *
+import random
 
-# Abstract product 1.1
-class Human(ABC):
-
-    @abstractmethod
-    def abs_func_abstract_unit_human(self) -> str:
-        pass
+from baseunit import BattleUnit
+from storage import Storage
 
 
-# Abstract product 1.2
-class Tank(ABC):
+class Human(BattleUnit):
+    health_points = 100
 
-    @abstractmethod
-    def abs_func_abstract_unit_tank(self) -> str:
-        pass
+    def __init__(self, *args, **kwargs):
+        super(Human, self).__init__(*args, **kwargs)
 
+        self.damage = random.randint(30, 50)
 
-# Concrete product 1.1
-class Humans(Human):
-
-    def func_humans_human(self) -> str:
-        return "product Humans from Human concrete factory Unit factory BaseUnit"
-
-
-# Concrete product 1.2
-class Tanks(Tank):
-
-    def func_tanks_tank(self) -> str:
-        return "product Humans from Human concrete factory Unit factory BaseUnit"
+    def __str__(self):
+        return f'<Human[{self.index}]: ' \
+               f'hp -> {self.health_points}; ' \
+               f'dmg -> {self.damage}>'
 
 
+human1 = Human(
+    index=1,
+    squad_index=None
+)
+print(human1)
+Storage.humans.append(human1)
+Storage.humans.append(
+    Human(index=2, squad_index=None)
+)
+humans = Storage.get_humans_by_squad(squad_index=None)
+print(humans)
 
 
+class Tank(BattleUnit):
+    health_points = 400
+
+    def __init__(self, *args, **kwargs):
+        super(Tank, self).__init__(*args, **kwargs)
+
+        self.damage = random.randint(80, 120)
+
+    def __str__(self):
+        return f'<Tank[{self.index}: ' \
+               f'hp -> {self.health_points}; ' \
+               f'dmg -> {self.damage}>'
