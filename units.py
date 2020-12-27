@@ -4,7 +4,6 @@ from baseunit import BattleUnit
 from storage import Storage
 
 
-# Abstract product 1.1
 class Human(BattleUnit):
     health_points = 100
 
@@ -32,6 +31,15 @@ humans = Storage.get_humans_by_squad(squad_index=None)
 print(humans)
 
 
-# Abstract product 1.2
 class Tank(BattleUnit):
-    pass
+    health_points = 400
+
+    def __init__(self, *args, **kwargs):
+        super(Tank, self).__init__(*args, **kwargs)
+
+        self.damage = random.randint(80, 120)
+
+    def __str__(self):
+        return f'<Tank[{self.index}: ' \
+               f'hp -> {self.health_points}; ' \
+               f'dmg -> {self.damage}>'
