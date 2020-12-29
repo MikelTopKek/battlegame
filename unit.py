@@ -2,11 +2,10 @@ from baseunit import BaseUnit
 
 
 class Unit(BaseUnit):
-
     country_index: int
 
-    def __init__(self, country_index):
-        super().__init__(country_index)
+    def __init__(self, index, country_index):
+        super().__init__(index)
         self.country_index = country_index
 
     def attack(self, *args, **kwargs):
@@ -17,8 +16,8 @@ class BattleUnit(Unit):
     health_points: int
     damage: int
 
-    def __init__(self, index: int, squad_index: int = None):
-        super(BattleUnit, self).__init__(index)
+    def __init__(self, index: int, country_index, squad_index: int = None):
+        super(BattleUnit, self).__init__(index, country_index)
 
         self.squad_index = squad_index
 
@@ -33,8 +32,8 @@ class BattleUnit(Unit):
 class SquadUnit(Unit):
     army_index: int
 
-    def __init__(self, index: int, army_index: int):
-        super(SquadUnit, self).__init__(index)
+    def __init__(self, index: int, army_index: int, country_index):
+        super(SquadUnit, self).__init__(index, country_index)
 
         self.army_index = army_index
 
