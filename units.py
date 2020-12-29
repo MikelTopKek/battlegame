@@ -1,10 +1,10 @@
 import random
 
-from baseunit import BattleUnit
+from unit import Unit
 from storage import Storage
 
 
-class Human(BattleUnit):
+class Human(Unit):
     health_points = 100
 
     def __init__(self, *args, **kwargs):
@@ -31,7 +31,7 @@ humans = Storage.get_humans_by_squad(squad_index=None)
 print(humans)
 
 
-class Tank(BattleUnit):
+class Tank(Unit):
     health_points = 400
 
     def __init__(self, *args, **kwargs):

@@ -1,13 +1,13 @@
-from baseunit import SquadUnit
+from unit import Unit
 
 
-class HumanSquad(SquadUnit):
+class HumanSquad(Unit):
 
     def __str__(self):
         return f'<HumanSquad[{self.index}>'
 
 
-class TankSquad(SquadUnit):
+class TankSquad(Unit):
 
     def __str__(self):
         return f'<TankSquad[{self.index}>'
