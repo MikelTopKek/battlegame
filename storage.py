@@ -1,6 +1,3 @@
-from units import Human
-
-
 class Storage:
     armies: list = list()
     humans = list()
