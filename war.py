@@ -1,6 +1,8 @@
 class War:
 
-    def __init__(self):
+    def __init__(self, number_of_countries, number_of_turns):
+        self.number_of_turns = number_of_countries
+        self.number_of_countries = number_of_turns
         self.number_of_countries = 0
         self.number_of_turns = 0
 
@@ -8,13 +10,4 @@ class War:
         pass
 
     def generate(self):
-        pass
-
-    def start_war(self):
-        pass
-
-    def get_elem_by_index(self):
-        pass
-
-    def get_humans_by_squad_index(self):
         pass
