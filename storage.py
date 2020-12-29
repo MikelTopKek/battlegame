@@ -1,4 +1,3 @@
-import countries
 from units import Human
 
 
@@ -9,13 +8,6 @@ class Storage:
     human_squads = list()
     tank_squads = list()
     countries = list()
-
-    def add_country(self, country):
-        self.countries.append(country)
-
-    def add_humans(self, number_of_humans):
-        for _ in range():
-            self.humans.append(Human())
 
     @classmethod
     def get_elem_by_index(cls, index: int, elem_type: str) -> list:
