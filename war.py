@@ -1,9 +1,3 @@
-class Army:
-
-    def __init__(self, index):
-        self.countryIndex = index
-
-
 class War:
 
     def __init__(self):
