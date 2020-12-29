@@ -1,6 +1,6 @@
-from data import country_data
-from storage import Storage
 from countries import Country
+from data import COUNTRY_DATA
+from storage import Storage
 
 
 class War:
@@ -14,6 +14,6 @@ class War:
 
     def generate(self):
         for i in range(self.number_of_countries):
-            country = Country(**country_data[i])
+            country = Country(**COUNTRY_DATA[i])
 
             Storage.countries.append(country)

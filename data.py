@@ -1,4 +1,4 @@
-country_data = [
+COUNTRY_DATA = [
     {
         'index': 'ua',
         'name': 'Ukraine',
