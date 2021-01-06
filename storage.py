@@ -1,3 +1,6 @@
+from units import Human, Tank
+
+
 class Storage:
     armies: list = list()
     humans = list()
@@ -17,7 +20,7 @@ class Storage:
         cls.countries.append(country)
 
     @classmethod
-    def add_humans(cls, number_of_humans, country_index):
+    def add_humans(cls, number_of_humans, country_index) -> list:
         for _ in range(number_of_humans):
             cls.humans.append(
                 Human(
@@ -26,6 +29,8 @@ class Storage:
                 )
             )
             cls._current_human_index += 1
+
+        return cls.humans[:-number_of_humans]
 
     @classmethod
     def add_tanks(cls, number_of_tanks, country_index):
@@ -39,30 +44,20 @@ class Storage:
             cls._current_tank_index += 1
 
     @classmethod
-    def get_free_humans(cls, number_of_free_humans, country_index) -> list:
-        free_humans = list()
-        for _ in range(number_of_free_humans):
-            free_humans.append(
-                Human(
-                    cls._current_human_index,
-                    country_index
-                )
-            )
-            cls._current_human_index += 1
-        return free_humans
+    def get_free_humans(cls, country_index) -> list:
+
+        def filter_rule(human):
+            return human.squad_index is None and human.country_index == country_index
+
+        return list(filter(filter_rule, cls.humans))
 
     @classmethod
-    def get_free_tanks(cls, number_of_free_tanks, country_index) -> list:
-        free_tanks = list()
-        for _ in range(number_of_free_tanks):
-            free_tanks.append(
-                Tank(
-                    cls._current_tank_index,
-                    country_index
-                )
-            )
-            cls._current_tank_index += 1
-        return free_tanks
+    def get_free_tanks(cls, country_index) -> list:
+
+        def filter_rule(tank):
+            return tank.squad_index is None and tank.country_index == country_index
+
+        return list(filter(filter_rule, cls.tanks))
 
     @classmethod
     def get_elem_by_index(cls, index: int, elem_type: str) -> list:
