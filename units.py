@@ -1,10 +1,9 @@
 import random
 
-from unit import Unit
-from storage import Storage
+from unit import BattleUnit
 
 
-class Human(Unit):
+class Human(BattleUnit):
     health_points = 100
 
     def __init__(self, *args, **kwargs):
@@ -18,20 +17,7 @@ class Human(Unit):
                f'dmg -> {self.damage}>'
 
 
-human1 = Human(
-    index=1,
-    squad_index=None
-)
-print(human1)
-Storage.humans.append(human1)
-Storage.humans.append(
-    Human(index=2, squad_index=None)
-)
-humans = Storage.get_humans_by_squad(squad_index=None)
-print(humans)
-
-
-class Tank(Unit):
+class Tank(BattleUnit):
     health_points = 400
 
     def __init__(self, *args, **kwargs):

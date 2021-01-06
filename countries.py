@@ -13,6 +13,11 @@ class Country(BaseUnit):
         self.human_per_squad = human_per_squad
         self.list_of_humans = []
 
+    def __str__(self):
+        return f'<Country [{self.index}]: ' \
+               f'Human count -> {self.human_count}; ' \
+               f'Tank count -> {self.tank_count}...>'
+
     def generate_units(self):
         Storage.add_humans(self.human_count, self.index)
         Storage.add_tanks(self.tank_count, self.index)
