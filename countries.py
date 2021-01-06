@@ -1,4 +1,5 @@
 from baseunit import BaseUnit
+from storage import Storage
 
 
 class Country(BaseUnit):
@@ -12,12 +13,18 @@ class Country(BaseUnit):
         self.human_per_squad = human_per_squad
         self.list_of_humans = []
 
-    def generate_units(self):
-        for i in range(1, self.human_count):
-            self.list_of_humans[i] = i
+    def __str__(self):
+        return f'<Country [{self.index}]: ' \
+               f'Human count -> {self.human_count}; ' \
+               f'Tank count -> {self.tank_count}...>'
 
-        for i in range(1, self.tank_count):
-            self.list_of_humans[i] = i
+    def generate_units(self):
+        Storage.add_humans(self.human_count, self.index)
+        Storage.add_tanks(self.tank_count, self.index)
+
+        human_indexes = Storage.get_free_humans(self.index)
+
+        tank_indexes = Storage.get_free_tanks(self.index)
 
     def attack(self, *args, **kwargs):
         pass
