@@ -14,7 +14,8 @@ class Human(BattleUnit):
     def __str__(self):
         return f'<Human[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
-               f'dmg -> {self.damage}>'
+               f'dmg -> {self.damage} '\
+               f'squad_index -> {self.squad_index}> \n'
 
 
 class Tank(BattleUnit):
@@ -28,7 +29,8 @@ class Tank(BattleUnit):
     def __str__(self):
         return f'<Tank[{self.index}: ' \
                f'hp -> {self.health_points}; ' \
-               f'dmg -> {self.damage}>'
+               f'dmg -> {self.damage} '\
+               f'squad_index -> {self.squad_index}> \n'
 
 
 class TanksSquad(SquadUnit):
@@ -37,7 +39,7 @@ class TanksSquad(SquadUnit):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return f'<TankSquad[{self.index}>'
+        return f'<TankSquad[{self.index}> \n'
 
 
 class HumanSquad(SquadUnit):
@@ -46,4 +48,4 @@ class HumanSquad(SquadUnit):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return f'<HumanSquad[{self.index}>'
+        return f'<HumanSquad[{self.index}> \n'

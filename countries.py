@@ -33,8 +33,7 @@ class Country(BaseUnit):
 
         for i in range(number_of_human_squads):
             human_pack = humans[i * self.human_per_squad:(i + 1) * self.human_per_squad]
-            humans.index = self.index
-            Storage.add_human_squad(human_pack, self.index)
+            Storage.add_human_squad(human_pack)
 
         for i in range(number_of_tank_squads):
             tank_pack = tanks[i * self.tank_per_squad:(i + 1) * self.tank_per_squad]

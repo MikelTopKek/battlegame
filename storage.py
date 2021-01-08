@@ -57,15 +57,15 @@ class Storage:
         cls.set_squad_to_tanks(cls._current_tank_squad_index)
         cls._current_tank_squad_index += 1
 
-    # Зачем нужны сет сквады я не понимаю
-
     @classmethod
     def set_squad_to_humans(cls, squad_index):
-        pass
+        for human in cls.human_squads[-1]:
+            human.squad_index = squad_index
 
     @classmethod
-    def set_squad_to_tanks(cls, human_indexes):
-        pass
+    def set_squad_to_tanks(cls, squad_index):
+        for tank in cls.tank_squads[-1]:
+            tank.squad_index = squad_index
 
     @classmethod
     def get_free_humans(cls, country_index) -> list:
