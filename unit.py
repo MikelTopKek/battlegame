@@ -30,12 +30,7 @@ class BattleUnit(Unit):
 
 
 class SquadUnit(Unit):
-    army_index: int
-
-    def __init__(self, index: int, army_index: int, country_index):
-        super(SquadUnit, self).__init__(index, country_index)
-
-        self.army_index = army_index
+    army_index: int = None
 
     def attack(self, enemy_squad):
         pass
