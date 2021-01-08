@@ -1,4 +1,4 @@
-from units import Human, Tank
+from units import Human, Tank, HumanSquad, TanksSquad
 
 
 class Storage:
@@ -33,7 +33,7 @@ class Storage:
         return cls.humans[:-number_of_humans]
 
     @classmethod
-    def add_tanks(cls, number_of_tanks, country_index):
+    def add_tanks(cls, number_of_tanks, country_index) -> list:
         for _ in range(number_of_tanks):
             cls.tanks.append(
                 Tank(
@@ -42,6 +42,44 @@ class Storage:
                 )
             )
             cls._current_tank_index += 1
+
+        return cls.tanks[:-number_of_tanks]
+
+    @classmethod
+    def add_human_squad(cls, country_index):
+        cls.human_squads.append(
+            HumanSquad(
+                index=cls._current_human_squad_index,
+                country_index=country_index
+            )
+        )
+        cls._current_human_squad_index += 1
+
+        return cls._current_human_squad_index - 1
+
+    @classmethod
+    def add_tank_squad(cls, country_index):
+        cls.tank_squads.append(
+            TanksSquad(
+                index=cls._current_tank_squad_index,
+                country_index=country_index
+            )
+        )
+        cls._current_tank_squad_index += 1
+
+        return cls._current_tank_squad_index - 1
+
+    @classmethod
+    def set_squad_to_humans(cls, squad_index, human_pack_indexes):
+        for human in cls.humans:
+            if human.index in human_pack_indexes:
+                human.squad_index = squad_index
+
+    @classmethod
+    def set_squad_to_tanks(cls, squad_index, tank_pack_indexes):
+        for tank in cls.tanks:
+            if tank.index in tank_pack_indexes:
+                tank.squad_index = squad_index
 
     @classmethod
     def get_free_humans(cls, country_index) -> list:
