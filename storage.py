@@ -55,13 +55,19 @@ class Storage:
         )
         cls._current_human_squad_index += 1
 
-        return cls._current_human_squad_index
+        return cls._current_human_squad_index - 1
 
     @classmethod
-    def add_tank_squad(cls, tank_pack):
-        cls.tank_squads.append(tank_pack)
-        cls.set_squad_to_tanks(cls._current_tank_squad_index)
+    def add_tank_squad(cls, country_index):
+        cls.tank_squads.append(
+            TanksSquad(
+                index=cls._current_tank_squad_index,
+                country_index=country_index
+            )
+        )
         cls._current_tank_squad_index += 1
+
+        return cls._current_tank_squad_index - 1
 
     @classmethod
     def set_squad_to_humans(cls, squad_index, human_pack_indexes):
@@ -70,9 +76,10 @@ class Storage:
                 human.squad_index = squad_index
 
     @classmethod
-    def set_squad_to_tanks(cls, squad_index):
-        for tank in cls.tank_squads[-1]:
-            tank.squad_index = squad_index
+    def set_squad_to_tanks(cls, squad_index, tank_pack_indexes):
+        for tank in cls.tanks:
+            if tank.index in tank_pack_indexes:
+                tank.squad_index = squad_index
 
     @classmethod
     def get_free_humans(cls, country_index) -> list:

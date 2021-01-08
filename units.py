@@ -12,10 +12,10 @@ class Human(BattleUnit):
         self.damage = random.randint(30, 50)
 
     def __str__(self):
-        return f'<Human[{self.index}]: ' \
+        return f'\n<Human[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage} '\
-               f'squad_index -> {self.squad_index}> \n'
+               f'squad_index -> {self.squad_index}>'
 
 
 class Tank(BattleUnit):
@@ -23,14 +23,13 @@ class Tank(BattleUnit):
 
     def __init__(self, *args, **kwargs):
         super(Tank, self).__init__(*args, **kwargs)
-
         self.damage = random.randint(80, 120)
 
     def __str__(self):
-        return f'<Tank[{self.index}: ' \
+        return f'\n<Tank[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
-               f'dmg -> {self.damage} '\
-               f'squad_index -> {self.squad_index}> \n'
+               f'dmg -> {self.damage}; '\
+               f'squad_index -> {self.squad_index}>'
 
 
 class TanksSquad(SquadUnit):
@@ -39,7 +38,7 @@ class TanksSquad(SquadUnit):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return f'<TankSquad[{self.index}> \n'
+        return f'\n<TankSquad index: {self.index}'
 
 
 class HumanSquad(SquadUnit):
@@ -48,4 +47,4 @@ class HumanSquad(SquadUnit):
         super().__init__(*args, **kwargs)
 
     def __str__(self):
-        return f'<HumanSquad[{self.index}> \n'
+        return f'\n<HumanSquad index: {self.index}'

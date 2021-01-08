@@ -42,7 +42,12 @@ class Country(BaseUnit):
 
         for i in range(number_of_tank_squads):
             tank_pack = tanks[i * self.tank_per_squad:(i + 1) * self.tank_per_squad]
-            Storage.add_tank_squad(tank_pack)
+            tank_pack_indexes = [tank.index for tank in tank_pack]
+            squad_index = Storage.add_tank_squad(self.index)
+            Storage.set_squad_to_tanks(
+                squad_index=squad_index,
+                tank_pack_indexes=tank_pack_indexes
+            )
 
     def attack(self, *args, **kwargs):
         pass
