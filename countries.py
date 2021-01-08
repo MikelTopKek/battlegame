@@ -1,3 +1,5 @@
+from math import ceil
+
 from baseunit import BaseUnit
 from storage import Storage
 
@@ -22,9 +24,21 @@ class Country(BaseUnit):
         Storage.add_humans(self.human_count, self.index)
         Storage.add_tanks(self.tank_count, self.index)
 
-        human_indexes = Storage.get_free_humans(self.index)
+        humans = Storage.get_free_humans(self.index)
 
-        tank_indexes = Storage.get_free_tanks(self.index)
+        tanks = Storage.get_free_tanks(self.index)
+
+        number_of_human_squads = ceil(self.human_count / self.human_per_squad)
+        number_of_tank_squads = ceil(self.tank_count / self.tank_per_squad)
+
+        for i in range(number_of_human_squads):
+            human_pack = humans[i * self.human_per_squad:(i + 1) * self.human_per_squad]
+            humans.index = self.index
+            Storage.add_human_squad(human_pack, self.index)
+
+        for i in range(number_of_tank_squads):
+            tank_pack = tanks[i * self.tank_per_squad:(i + 1) * self.tank_per_squad]
+            Storage.add_tank_squad(tank_pack)
 
     def attack(self, *args, **kwargs):
         pass

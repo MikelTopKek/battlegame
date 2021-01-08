@@ -1,4 +1,4 @@
-from units import Human, Tank
+from units import Human, Tank, HumanSquad, TanksSquad
 
 
 class Storage:
@@ -33,7 +33,7 @@ class Storage:
         return cls.humans[:-number_of_humans]
 
     @classmethod
-    def add_tanks(cls, number_of_tanks, country_index):
+    def add_tanks(cls, number_of_tanks, country_index) -> list:
         for _ in range(number_of_tanks):
             cls.tanks.append(
                 Tank(
@@ -42,6 +42,30 @@ class Storage:
                 )
             )
             cls._current_tank_index += 1
+
+        return cls.tanks[:-number_of_tanks]
+
+    @classmethod
+    def add_human_squad(cls, human_pack):
+        cls.human_squads.append(human_pack)
+        cls.set_squad_to_humans(cls._current_human_squad_index)
+        cls._current_human_squad_index += 1
+
+    @classmethod
+    def add_tank_squad(cls, tank_pack):
+        cls.tank_squads.append(tank_pack)
+        cls.set_squad_to_tanks(cls._current_tank_squad_index)
+        cls._current_tank_squad_index += 1
+
+    # Зачем нужны сет сквады я не понимаю
+
+    @classmethod
+    def set_squad_to_humans(cls, squad_index):
+        pass
+
+    @classmethod
+    def set_squad_to_tanks(cls, human_indexes):
+        pass
 
     @classmethod
     def get_free_humans(cls, country_index) -> list:

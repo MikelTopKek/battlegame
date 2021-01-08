@@ -1,6 +1,6 @@
 import random
 
-from unit import BattleUnit
+from unit import BattleUnit, SquadUnit
 
 
 class Human(BattleUnit):
@@ -29,3 +29,21 @@ class Tank(BattleUnit):
         return f'<Tank[{self.index}: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage}>'
+
+
+class TanksSquad(SquadUnit):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        return f'<TankSquad[{self.index}>'
+
+
+class HumanSquad(SquadUnit):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def __str__(self):
+        return f'<HumanSquad[{self.index}>'
