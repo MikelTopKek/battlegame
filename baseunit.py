@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class BaseUnit(ABC):
-    status: int
+    status: int = 0 # TODO:::replace with enum value or other variable
     index: int
 
     def __init__(self, index: int):
