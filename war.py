@@ -14,7 +14,6 @@ class War:
 
     def generate(self):
         for i in range(self.number_of_countries):
-            country = Country(**COUNTRY_DATA[i])
-
-            Storage.add_country(country)
-            country.generate_units()
+            Storage.add_country(
+                Country(**COUNTRY_DATA[i])
+            )
