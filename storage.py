@@ -1,4 +1,5 @@
 from units import Human, Tank, HumanSquad, TanksSquad
+from army import Army
 
 
 class Storage:
@@ -12,8 +13,16 @@ class Storage:
     _current_human_index = 0
     _current_human_squad_index = 0
 
+    _current_army_index = 0
+
     _current_tank_index = 0
     _current_tank_squad_index = 0
+
+    @classmethod
+    def add_army(cls, country_index) -> int:
+        cls.armies.append(Army(index=cls._current_army_index, country_index=country_index))
+        cls._current_army_index += 1
+        return cls._current_army_index
 
     @classmethod
     def add_country(cls, country):
@@ -50,7 +59,7 @@ class Storage:
         cls.human_squads.append(
             HumanSquad(
                 index=cls._current_human_squad_index,
-                country_index=country_index
+                country_index=country_index,
             )
         )
         cls._current_human_squad_index += 1
@@ -96,6 +105,35 @@ class Storage:
             return tank.squad_index is None and tank.country_index == country_index
 
         return list(filter(filter_rule, cls.tanks))
+
+    # Get free squads
+    @classmethod
+    def get_free_human_squads(cls, human_squads_indexes_pack, country_index) -> list:
+
+        humans = cls.humans
+        human_squads = cls.human_squads
+
+        def filter_rule1(human_squad_index):
+            for human in humans:
+                if human.squad_index in human_squads_indexes_pack and human.country_index == country_index:
+                    for human_squad in human_squads:
+                        if human_squad.index == human_squad_index and human_squad.army_index is None:
+                            return True
+
+        # def filter_rule2(human_squads, human):
+        #     return human_squads.army_index is None and human in human_squads and filter_rule1(human)
+
+        return list(filter(filter_rule1, human_squads_indexes_pack))
+
+    @classmethod
+    def set_army_to_squad(cls, army_index, human_squads_pack_indexes):
+        for human_squad in cls.human_squads:
+            if human_squad.index in human_squads_pack_indexes:
+                human_squad.army_index = army_index
+
+        # for tank_squad in cls.tank_squads:
+        #     if tank_squad.index in tank_squads_pack_indexes:
+        #         tank_squad.army_index = army_index
 
     @classmethod
     def get_elem_by_index(cls, index: int, elem_type: str) -> list:

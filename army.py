@@ -2,4 +2,6 @@ from unit import Unit
 
 
 class Army(Unit):
-    pass
+    def attack(self, *args, **kwargs):
+        pass
+
