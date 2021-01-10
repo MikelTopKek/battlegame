@@ -34,9 +34,11 @@ class Tank(BattleUnit):
 
 class TanksSquad(SquadUnit):
     def __str__(self):
-        return f'<TankSquad index: {self.index}'
+        return f'<Tank squad index: {self.index}; ' \
+               f'Army index: {self.army_index}>'
 
 
 class HumanSquad(SquadUnit):
     def __str__(self):
-        return f'<HumanSquad index: {self.index}'
+        return f'<Human squad index: {self.index}; ' \
+               f'Army index: {self.army_index}>'

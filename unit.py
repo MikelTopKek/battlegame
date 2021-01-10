@@ -2,11 +2,7 @@ from baseunit import BaseUnit
 
 
 class Unit(BaseUnit):
-    country_index: int
-
-    def __init__(self, index, country_index):
-        super().__init__(index)
-        self.country_index = country_index
+    """Dummy class. Should be empty"""
 
     def attack(self, *args, **kwargs):
         pass
@@ -16,8 +12,8 @@ class BattleUnit(Unit):
     health_points: int
     damage: int
 
-    def __init__(self, index: int, country_index, squad_index: int = None):
-        super(BattleUnit, self).__init__(index, country_index)
+    def __init__(self, index: int, squad_index: int = None):
+        super(BattleUnit, self).__init__(index)
 
         self.squad_index = squad_index
 
