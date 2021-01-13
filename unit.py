@@ -1,3 +1,4 @@
+import storage
 from baseunit import BaseUnit
 
 
@@ -18,15 +19,16 @@ class BattleUnit(Unit):
         self.squad_index = squad_index
 
     def attack(self, enemy):
-        enemy.health_points -= self.damage
-        self.health_points -= enemy.damage
-        if enemy.health_points < 0:
-            enemy.status = "DEAD"
-        return enemy
+        health_points = enemy.health_points - self.damage
+
+        new_status_enemy = "DEAD" if health_points <= 0 else None
+
+        storage.Storage.update_human(enemy.index, health_points, new_status_enemy)
 
 
 class SquadUnit(Unit):
     army_index: int = None
+    squad_status = None
 
-    def attack(self, enemy_squad):
+    def attack(self, enemy_squad_index):
         pass

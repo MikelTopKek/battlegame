@@ -13,4 +13,4 @@ class Army(Unit):
 
     def __str__(self):
         return f'<Army [{self.index}]: ' \
-               f'Country -> {self.country_index}, ...>'
+               f'Country -> {self.country_index}>'
