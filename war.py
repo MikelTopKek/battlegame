@@ -13,3 +13,4 @@ class War:
             Storage.add_country(
                 Country(**country)
             )
+            print(')))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))')

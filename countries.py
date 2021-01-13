@@ -9,10 +9,10 @@ def _generate_battle_unit(
         unit_create_squad: callable):
     units = unit_create(unit_count)
 
-    number_of_tank_squads = ceil(unit_count / units_per_squad)
+    number_of_squads = ceil(unit_count / units_per_squad)
     squads_pack_indexes = list()
-
-    for i in range(number_of_tank_squads):
+    print(number_of_squads, ' -----generate battle unit +++++++++++++++++++++++')
+    for i in range(number_of_squads):
         pack = units[i * units_per_squad: (i + 1) * units_per_squad]
         pack_indexes = [unit.index for unit in pack]
         squad_index = unit_create_squad(pack_indexes)
@@ -59,7 +59,6 @@ class Country(BaseUnit):
 
         number_of_human_squads = len(human_squads_pack_indexes)
         number_of_tank_squads = len(tank_squads_pack_indexes)
-
         # army generation
         number_of_armies = int(max(number_of_human_squads / self.human_squads_per_army,
                                    number_of_tank_squads / self.tank_squads_per_army))

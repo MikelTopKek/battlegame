@@ -1,5 +1,11 @@
 from army import Army
 from units import Human, Tank, HumanSquad, TanksSquad
+from enum import Enum
+
+
+class WarStatuses(Enum):
+    ALIVE = 0
+    DEAD = 0
 
 
 class Storage:
@@ -9,6 +15,7 @@ class Storage:
     human_squads = list()
     tank_squads = list()
     countries = list()
+
 
     _current_human_index = 0
     _current_human_squad_index = 0
@@ -24,6 +31,7 @@ class Storage:
 
     @classmethod
     def add_humans(cls, number_of_humans) -> list:
+
         for _ in range(number_of_humans):
             cls.humans.append(
                 Human(
@@ -31,7 +39,7 @@ class Storage:
                 )
             )
             cls._current_human_index += 1
-
+        print(f'CREATE HUMANS {cls._current_human_index} AZAZAZAZAZAAZAZAZAZAZAZAZAZAZAZAZA')
         return cls.humans[:-number_of_humans]
 
     @classmethod
@@ -43,7 +51,7 @@ class Storage:
                 )
             )
             cls._current_tank_index += 1
-
+        print(f'CREATE TANKS {cls._current_tank_index} AZAZAZAZAZAAZAZAZAZAZAZAZAZAZAZAZA')
         return cls.tanks[:-number_of_tanks]
 
     @classmethod
@@ -58,7 +66,7 @@ class Storage:
             human_pack_indexes=human_pack_indexes
         )
         cls._current_human_squad_index += 1
-
+        print(f'add human squad {cls._current_human_squad_index} //////////////////////////////////')
         return cls._current_human_squad_index - 1
 
     @classmethod
@@ -87,6 +95,7 @@ class Storage:
             tank_squads_pack_indexes=tank_squads_pack_indexes
         )
         cls._current_army_index += 1
+        print(f'army {cls._current_army_index}  country {country_index} was created right now____________')
         return cls._current_army_index
 
     @classmethod
@@ -94,6 +103,7 @@ class Storage:
         for human in cls.humans:
             if human.index in human_pack_indexes:
                 human.squad_index = squad_index
+                print('Set Squad ', squad_index, ' To human with index', human.index)
 
     @classmethod
     def set_squad_to_tanks(cls, squad_index, tank_pack_indexes):
