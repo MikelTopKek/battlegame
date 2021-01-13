@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class BaseUnit(ABC):
-    status = "ALIVE" # TODO:::replace with enum value or other variable
     index: int
 
     def __init__(self, index: int):
@@ -14,4 +13,3 @@ class BaseUnit(ABC):
     @abstractmethod
     def attack(self, *args, **kwargs):
         pass
-

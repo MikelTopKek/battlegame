@@ -1,13 +1,7 @@
-from enum import Enum
-
 import army
 import countries
 import units
-
-
-class WarStatuses(Enum):
-    ALIVE = 0
-    DEAD = 0
+from data import WarStatuses
 
 
 class Storage:
@@ -129,7 +123,14 @@ class Storage:
                     human.status = human_status
 
     @classmethod
+    def human_squad_status(cls, squad_index):
+        print(squad_index)
+
+        squad_humans = [cls.humans[0].status.value, cls.humans[1].status.value]
+        human_squad_status = 1 if sum(squad_humans) > 0 else 0
+        return WarStatuses(human_squad_status)
+
+    @classmethod
     def find_free_human_in_squad(cls, squad_index):
 
         pass
-

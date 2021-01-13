@@ -1,3 +1,5 @@
+from enum import Enum
+
 COUNTRY_DATA = [
     {
         'index': 'test',
@@ -5,7 +7,7 @@ COUNTRY_DATA = [
         'human_count': 6,
         'tank_count': 3,
         'tank_per_squad': 1,
-        'human_per_squad': 1,
+        'human_per_squad': 2,
         'human_squads_per_army': 2,
         'tank_squads_per_army': 1
     },
@@ -40,3 +42,8 @@ COUNTRY_DATA = [
         'tank_squads_per_army': 1
     }
 ]
+
+
+class WarStatuses(Enum):
+    STATUS_DEAD = 0
+    STATUS_ALIVE = 1
