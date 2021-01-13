@@ -1,7 +1,10 @@
+import logging
 from math import ceil
 
 from baseunit import BaseUnit
 import storage
+
+logger = logging.getLogger(__name__)
 
 
 def _generate_battle_unit(
@@ -62,11 +65,16 @@ class Country(BaseUnit):
         number_of_armies = int(max(number_of_human_squads / self.human_squads_per_army,
                                    number_of_tank_squads / self.tank_squads_per_army))
 
-        print(f'number_of_armies: {number_of_armies} \n'
-              f'number_of_human_squads: {number_of_human_squads} \n'
-              f'human_squads_per_army: {self.human_squads_per_army} \n'
-              f'number_of_tank_squads: {number_of_tank_squads} \n'
-              f'tank_squads_per_army: {self.tank_squads_per_army} \n')
+        logger.info(f'number_of_armies: {number_of_armies}')
+        logger.info(f'number_of_human_squads: {number_of_human_squads}')
+        logger.info(f'human_squads_per_army: {self.human_squads_per_army}')
+        logger.info(f'number_of_tank_squads: {number_of_tank_squads}')
+        logger.info(f'tank_squads_per_army: {self.tank_squads_per_army}')
+
+        try:
+            raise Exception('test')
+        except Exception as exc:
+            logger.error(f'The error was raised: {exc}')
 
         for i in range(number_of_armies):
             pack_index_start = i * self.human_squads_per_army
