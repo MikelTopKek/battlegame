@@ -8,7 +8,6 @@ class Human(BattleUnit):
     def __init__(self, *args, **kwargs):
         super(Human, self).__init__(*args, **kwargs)
         self.health_points = random.randint(100, 100)
-        self.status = "Alive"
         self.damage = random.randint(40, 70)
 
     def __str__(self):
