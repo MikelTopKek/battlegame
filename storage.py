@@ -2,6 +2,7 @@ import army
 import countries
 import units
 from data import WarStatuses, TypeOfUnit
+from random import randint
 
 
 class Storage:
@@ -150,5 +151,32 @@ class Storage:
         for unit in unit_storage:
             if unit.squad_index == squad_index and unit.status is WarStatuses.STATUS_ALIVE:
                 return unit
+
+    @classmethod
+    def return_army_country(cls, my_army):
+        return my_army.country_index
+
+    @classmethod
+    def find_free_squad_in_army(cls, army_index):
+        unit_type = randint(0, 1)
+        squad = list()
+        while not squad:
+            squad = Storage.human_squads[randint(0, len(Storage.human_squads))-1] if unit_type == 0 else \
+                Storage.tank_squads[randint(0, len(Storage.tank_squads))-1]
+            if squad.status == WarStatuses.STATUS_DEAD:
+                squad = list()
+
+        return squad
+
+    @classmethod
+    def get_squad_type(cls, squad):
+        for tank in cls.tanks:
+            if tank.squad_index == squad.index:
+                return TypeOfUnit.TYPE_TANK
+        for human in cls.humans:
+            if human.squad_index == squad.index:
+                return TypeOfUnit.TYPE_HUMAN
+
+
 
 
