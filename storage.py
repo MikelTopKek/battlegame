@@ -114,13 +114,20 @@ class Storage:
                 tank_squad.army_index = army_index
 
     @classmethod
-    def update_human(cls, human_index, human_hp, human_status):
+    def update_unit(cls, unit_index, unit_hp, unit_status, unit_storage):
+        for unit in unit_storage:
+            if unit.index == unit_index:
+                unit.health_points = unit_hp
+                if unit_status:
+                    unit.status = unit_status
 
-        for human in cls.humans:
-            if human.index == human_index:
-                human.health_points = human_hp
-                if human_status:
-                    human.status = human_status
+    @classmethod
+    def update_human(cls, human_index, human_hp, human_status):
+        cls.update_unit(human_index, human_hp, human_status, cls.humans)
+
+    @classmethod
+    def update_tank(cls, human_index, human_hp, human_status):
+        cls.update_unit(human_index, human_hp, human_status, cls.tanks)
 
     @classmethod
     def human_squad_status(cls, squad_index):

@@ -47,3 +47,8 @@ COUNTRY_DATA = [
 class WarStatuses(Enum):
     STATUS_DEAD = 0
     STATUS_ALIVE = 1
+
+
+class TypeOfUnit(Enum):
+    TYPE_HUMAN = 0
+    TYPE_TANK = 1
