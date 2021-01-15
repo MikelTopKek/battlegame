@@ -1,6 +1,6 @@
 import storage
 from baseunit import BaseUnit
-from data import WarStatuses
+from data import WarStatuses, TypeOfUnit
 
 
 class Unit(BaseUnit):
@@ -29,7 +29,12 @@ class BattleUnit(Unit):
 
         new_status_enemy = WarStatuses.STATUS_DEAD if health_points <= 0 else None
 
-        storage.Storage.update_human(enemy.index, health_points, new_status_enemy)
+        unit_type = TypeOfUnit.TYPE_HUMAN if enemy.damage < 100 else TypeOfUnit.TYPE_TANK
+
+        if unit_type == TypeOfUnit.TYPE_HUMAN:
+            storage.Storage.update_human(enemy.index, health_points, new_status_enemy)
+        else:
+            storage.Storage.update_tank(enemy.index, health_points, new_status_enemy)
 
 
 class SquadUnit(Unit):
