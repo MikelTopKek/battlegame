@@ -14,7 +14,8 @@ class Human(unit.BattleUnit):
         return f'<Human[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage} ' \
-               f'status -> {self.status}>'
+               f'status -> {self.status} ' \
+               f'squad_index -> {self.squad_index}>'
 
 
 class Tank(unit.BattleUnit):
@@ -28,7 +29,7 @@ class Tank(unit.BattleUnit):
         return f'<Tank[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
                f'dmg -> {self.damage} ' \
-               f'status -> {self.status}>'
+               f'squad_index -> {self.squad_index}>'
 
 
 class TanksSquad(unit.SquadUnit):
@@ -40,7 +41,7 @@ class TanksSquad(unit.SquadUnit):
 
 
 class HumanSquad(unit.SquadUnit):
-    get_storage_status = "human_squad_status"
+    # get_storage_status = "human_squad_status"
 
     def __str__(self):
         return f'<Human squad index: {self.index}; ' \

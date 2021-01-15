@@ -4,12 +4,12 @@ COUNTRY_DATA = [
     {
         'index': 'test',
         'name': 'TEST',
-        'human_count': 6,
-        'tank_count': 3,
+        'human_count': 9,
+        'tank_count': 5,
         'tank_per_squad': 1,
         'human_per_squad': 2,
-        'human_squads_per_army': 2,
-        'tank_squads_per_army': 1
+        'human_squads_per_army': 3,
+        'tank_squads_per_army': 2
     },
     {
         'index': 'TheKek',
