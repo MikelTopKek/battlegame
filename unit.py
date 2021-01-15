@@ -19,27 +19,54 @@ class BattleUnit(Unit):
     damage: int
     status = WarStatuses.STATUS_ALIVE
 
-    def __init__(self, index: int, squad_index: int = None):
+    def __init__(self, index: int):
         super(BattleUnit, self).__init__(index)
-        # self.status = WarStatuses.STATUS_ALIVE
-        self.squad_index = squad_index
+        self.squad_index = 0
 
     def attack(self, enemy):
-        health_points = enemy.health_points - self.damage
 
-        new_status_enemy = WarStatuses.STATUS_DEAD if health_points <= 0 else None
+        if self.status == WarStatuses.STATUS_DEAD or enemy.status == WarStatuses.STATUS_DEAD:
+            return
 
-        unit_type = TypeOfUnit.TYPE_HUMAN if enemy.damage < 100 else TypeOfUnit.TYPE_TANK
+        enemy.health_points -= self.damage
+        self.health_points -= enemy.damage
 
-        if unit_type == TypeOfUnit.TYPE_HUMAN:
-            storage.Storage.update_human(enemy.index, health_points, new_status_enemy)
+        new_status_self = WarStatuses.STATUS_DEAD if self.health_points <= 0 else WarStatuses.STATUS_ALIVE
+        new_status_enemy = WarStatuses.STATUS_DEAD if enemy.health_points <= 0 else WarStatuses.STATUS_ALIVE
+
+        unit_type_enemy = TypeOfUnit.TYPE_HUMAN if enemy.damage < 100 else TypeOfUnit.TYPE_TANK
+        unit_type_self = TypeOfUnit.TYPE_HUMAN if self.damage < 100 else TypeOfUnit.TYPE_TANK
+
+        if unit_type_enemy == TypeOfUnit.TYPE_HUMAN:
+            storage.Storage.update_human(enemy.index, enemy.health_points, new_status_enemy)
         else:
-            storage.Storage.update_tank(enemy.index, health_points, new_status_enemy)
+            storage.Storage.update_tank(enemy.index, enemy.health_points, new_status_enemy)
+
+        if unit_type_self == TypeOfUnit.TYPE_HUMAN:
+            storage.Storage.update_human(self.index, self.health_points, new_status_self)
+        else:
+            storage.Storage.update_tank(self.index, self.health_points, new_status_self)
 
 
 class SquadUnit(Unit):
     army_index: int = None
-    squad_status = None
 
-    def attack(self, enemy_squad_index):
-        pass
+    def __init__(self, index: int):
+        super(SquadUnit, self).__init__(index)
+        self.status = WarStatuses.STATUS_ALIVE
+
+    def attack(self, self_squad_type, enemy_squad, enemy_squad_type):
+
+        if storage.Storage.squad_status(enemy_squad.index, enemy_squad_type) == WarStatuses.STATUS_ALIVE:
+            self_unit = storage.Storage.find_free_unit_in_squad(self.index, self_squad_type)
+            enemy_unit = storage.Storage.find_free_unit_in_squad(enemy_squad.index, enemy_squad_type)
+
+            self_unit.attack(enemy_unit)
+
+    @property
+    def status(self):
+        return getattr(storage.Storage, self.get_storage_status)(self.index)
+
+    @status.setter
+    def status(self, value):
+        self._status = value

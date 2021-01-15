@@ -1,7 +1,7 @@
 import army
 import countries
 import units
-from data import WarStatuses
+from data import WarStatuses, TypeOfUnit
 
 
 class Storage:
@@ -118,26 +118,37 @@ class Storage:
         for unit in unit_storage:
             if unit.index == unit_index:
                 unit.health_points = unit_hp
-                if unit_status:
-                    unit.status = unit_status
+                unit.status = unit_status
 
     @classmethod
     def update_human(cls, human_index, human_hp, human_status):
         cls.update_unit(human_index, human_hp, human_status, cls.humans)
 
     @classmethod
-    def update_tank(cls, human_index, human_hp, human_status):
-        cls.update_unit(human_index, human_hp, human_status, cls.tanks)
+    def update_tank(cls, tank_index, tank_hp, tank_status):
+        cls.update_unit(tank_index, tank_hp, tank_status, cls.tanks)
 
     @classmethod
-    def human_squad_status(cls, squad_index):
-        print(squad_index)
+    def squad_status(cls, squad_index, squad_type):
 
-        squad_humans = [cls.humans[0].status.value, cls.humans[1].status.value]
-        human_squad_status = 1 if sum(squad_humans) > 0 else 0
-        return WarStatuses(human_squad_status)
+        unit_storage = cls.humans if squad_type == TypeOfUnit.TYPE_HUMAN else cls.tanks
+        squad = list()
+        for unit in unit_storage:
+            if unit.squad_index == squad_index:
+                squad.append(unit.status.value)
+
+        if sum(squad) > 0:
+            squad_status = 1
+        else:
+            squad_status = 0
+
+        return WarStatuses(squad_status)
 
     @classmethod
-    def find_free_human_in_squad(cls, squad_index):
+    def find_free_unit_in_squad(cls, squad_index, squad_type):
+        unit_storage = cls.humans if squad_type == TypeOfUnit.TYPE_HUMAN else cls.tanks
+        for unit in unit_storage:
+            if unit.squad_index == squad_index and unit.status is WarStatuses.STATUS_ALIVE:
+                return unit
 
-        pass
+
