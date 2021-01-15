@@ -34,8 +34,8 @@ class BattleUnit(Unit):
         new_status_self = WarStatuses.STATUS_DEAD if self.health_points <= 0 else WarStatuses.STATUS_ALIVE
         new_status_enemy = WarStatuses.STATUS_DEAD if enemy.health_points <= 0 else WarStatuses.STATUS_ALIVE
 
-        unit_type_enemy = TypeOfUnit.TYPE_HUMAN if enemy.damage < 100 else TypeOfUnit.TYPE_TANK
-        unit_type_self = TypeOfUnit.TYPE_HUMAN if self.damage < 100 else TypeOfUnit.TYPE_TANK
+        unit_type_enemy = storage.Storage.get_essence_type(self)
+        unit_type_self = storage.Storage.get_essence_type(enemy)
         if unit_type_enemy == TypeOfUnit.TYPE_HUMAN:
             storage.Storage.update_human(enemy.index, enemy.health_points, new_status_enemy)
         else:
@@ -55,12 +55,13 @@ class SquadUnit(Unit):
         super(SquadUnit, self).__init__(index)
         self.index = index
 
-    def attack(self, self_squad_type, enemy_squad, enemy_squad_type):
+    def attack(self, enemy_squad_index):
 
-        print(storage.Storage.get_squad_type(enemy_squad))
-        if storage.Storage.squad_status(enemy_squad.index, enemy_squad_type) == WarStatuses.STATUS_ALIVE:
+        self_squad_type = storage.Storage.get_essence_type(self)
+        enemy_squad_type = storage.Storage.get_essence_type(enemy_squad_index)
+        if storage.Storage.squad_status(enemy_squad_index, enemy_squad_type) == WarStatuses.STATUS_ALIVE:
 
-            self_unit = storage.Storage.find_free_unit_in_squad(self.index, self_squad_type)
-            enemy_unit = storage.Storage.find_free_unit_in_squad(enemy_squad.index, enemy_squad_type)
+            self_unit = storage.Storage.find_free_unit_in_squad(self, self_squad_type)
+            enemy_unit = storage.Storage.find_free_unit_in_squad(enemy_squad_index, enemy_squad_type)
 
             self_unit.attack(enemy_unit)

@@ -13,8 +13,8 @@ class Human(unit.BattleUnit):
     def __str__(self):
         return f'<Human[{self.index}]: ' \
                f'hp -> {self.health_points}; ' \
-               f'dmg -> {self.damage} ' \
-               f'status -> {self.status} ' \
+               f'dmg -> {self.damage};' \
+               f'status -> {self.status};' \
                f'squad_index -> {self.squad_index}>'
 
 
@@ -26,9 +26,10 @@ class Tank(unit.BattleUnit):
         self.damage = random.randint(100, 190)
 
     def __str__(self):
-        return f'<Tank[{self.index}]: ' \
-               f'hp -> {self.health_points}; ' \
-               f'dmg -> {self.damage} ' \
+        return f'<Tank[{self.index}]:' \
+               f'hp -> {self.health_points};' \
+               f'dmg -> {self.damage};' \
+               f'status -> {self.status};' \
                f'squad_index -> {self.squad_index}>'
 
 

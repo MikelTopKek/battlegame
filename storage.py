@@ -13,13 +13,9 @@ class Storage:
     tank_squads = list()
     countries = list()
 
-    _current_human_index = 0
-    _current_human_squad_index = 0
-
+    _current_unit_index = 0
+    _current_squad_index = 0
     _current_army_index = 0
-
-    _current_tank_index = 0
-    _current_tank_squad_index = 0
 
     @classmethod
     def add_country(cls, name, index, human_count, tank_count, tank_per_squad, human_per_squad,
@@ -33,10 +29,10 @@ class Storage:
         for _ in range(number_of_humans):
             cls.humans.append(
                 units.Human(
-                    cls._current_human_index,
+                    cls._current_unit_index,
                 )
             )
-            cls._current_human_index += 1
+            cls._current_unit_index += 1
         return cls.humans[-number_of_humans:]
 
     @classmethod
@@ -44,40 +40,40 @@ class Storage:
         for _ in range(number_of_tanks):
             cls.tanks.append(
                 units.Tank(
-                    cls._current_tank_index,
+                    cls._current_unit_index,
                 )
             )
-            cls._current_tank_index += 1
+            cls._current_unit_index += 1
         return cls.tanks[-number_of_tanks:]
 
     @classmethod
     def add_human_squad(cls, human_pack_indexes):
         cls.human_squads.append(
             units.HumanSquad(
-                index=cls._current_human_squad_index,
+                index=cls._current_squad_index,
             )
         )
         cls.set_squad_to_humans(
-            squad_index=cls._current_human_squad_index,
+            squad_index=cls._current_squad_index,
             human_pack_indexes=human_pack_indexes
         )
-        cls._current_human_squad_index += 1
-        return cls._current_human_squad_index - 1
+        cls._current_squad_index += 1
+        return cls._current_squad_index - 1
 
     @classmethod
     def add_tank_squad(cls, tank_pack_indexes):
         cls.tank_squads.append(
             units.TanksSquad(
-                index=cls._current_tank_squad_index,
+                index=cls._current_squad_index,
             )
         )
         cls.set_squad_to_tanks(
-            squad_index=cls._current_tank_squad_index,
+            squad_index=cls._current_squad_index,
             tank_pack_indexes=tank_pack_indexes
         )
-        cls._current_tank_squad_index += 1
+        cls._current_squad_index += 1
 
-        return cls._current_tank_squad_index - 1
+        return cls._current_squad_index - 1
 
     @classmethod
     def add_army(cls, country_index, human_squads_pack_indexes, tank_squads_pack_indexes) -> int:
@@ -157,26 +153,38 @@ class Storage:
         return my_army.country_index
 
     @classmethod
-    def find_free_squad_in_army(cls, army_index):
-        unit_type = randint(0, 1)
-        squad = list()
-        while not squad:
-            squad = Storage.human_squads[randint(0, len(Storage.human_squads))-1] if unit_type == 0 else \
-                Storage.tank_squads[randint(0, len(Storage.tank_squads))-1]
-            if squad.status == WarStatuses.STATUS_DEAD:
-                squad = list()
+    def find_free_squad_in_army(cls, army_storage):
+        squad_index = 0
 
-        return squad
+        while not squad_index:
+            if len(army_storage)-1 < 0:
+                return
+            squad_index = army_storage[randint(0, len(army_storage)-1)]
+            if Storage.humans[squad_index].status == WarStatuses.STATUS_DEAD or \
+                    Storage.tanks[squad_index].status == WarStatuses.STATUS_DEAD:
+                squad_index = 0
+
+        return squad_index
 
     @classmethod
-    def get_squad_type(cls, squad):
+    def get_essence_type(cls, essence_index):
         for tank in cls.tanks:
-            if tank.squad_index == squad.index:
+            if tank.squad_index == essence_index:
                 return TypeOfUnit.TYPE_TANK
         for human in cls.humans:
-            if human.squad_index == squad.index:
+            if human.squad_index == essence_index:
                 return TypeOfUnit.TYPE_HUMAN
 
+    @classmethod
+    def get_army_storage(cls, my_army_index):
+        storage = list()
+        for squad in Storage.human_squads:
+            if squad.army_index == my_army_index:
+                storage.append(squad.index)
 
+        for squad in Storage.tank_squads:
+            if squad.army_index == my_army_index:
+                storage.append(squad.index)
+        return storage
 
 
