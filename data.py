@@ -22,16 +22,6 @@ COUNTRY_DATA = [
         'tank_squads_per_army': 1
     },
     {
-        'index': 'kfc',
-        'name': 'KFC',
-        'human_count': 159,
-        'tank_count': 21,
-        'tank_per_squad': 5,
-        'human_per_squad': 33,
-        'human_squads_per_army': 2,
-        'tank_squads_per_army': 1
-    },
-    {
         'index': 'ua',
         'name': 'Ukraine',
         'human_count': 112,

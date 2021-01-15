@@ -58,7 +58,6 @@ class Country(BaseUnit):
             unit_create=storage.Storage.add_tanks,
             unit_create_squad=storage.Storage.add_tank_squad
         )
-
         number_of_human_squads = len(human_squads_pack_indexes)
         number_of_tank_squads = len(tank_squads_pack_indexes)
         # army generation
@@ -71,10 +70,10 @@ class Country(BaseUnit):
         logger.info(f'number_of_tank_squads: {number_of_tank_squads}')
         logger.info(f'tank_squads_per_army: {self.tank_squads_per_army}')
 
-        try:
-            raise Exception('test')
-        except Exception as exc:
-            logger.error(f'The error was raised: {exc}')
+        # try:
+        #     raise Exception('test')
+        # except Exception as exc:
+        #     logger.error(f'The error was raised: {exc}')
 
         for i in range(number_of_armies):
             pack_index_start = i * self.human_squads_per_army
