@@ -62,14 +62,14 @@ class Country(BaseUnit):
         number_of_human_squads = len(human_squads_pack_indexes)
         number_of_tank_squads = len(tank_squads_pack_indexes)
         # army generation
-        number_of_armies = int(max(number_of_human_squads / self.human_squads_per_army,
-                                   number_of_tank_squads / self.tank_squads_per_army))
-
-        logger.info(f'number_of_armies: {number_of_armies}')
-        logger.info(f'number_of_human_squads: {number_of_human_squads}')
-        logger.info(f'human_squads_per_army: {self.human_squads_per_army}')
-        logger.info(f'number_of_tank_squads: {number_of_tank_squads}')
-        logger.info(f'tank_squads_per_army: {self.tank_squads_per_army}')
+        number_of_armies = ceil(max(number_of_human_squads / self.human_squads_per_army,
+                                    number_of_tank_squads / self.tank_squads_per_army))
+        #
+        # logger.info(f'number_of_armies: {number_of_armies}')
+        # logger.info(f'number_of_human_squads: {number_of_human_squads}')
+        # logger.info(f'human_squads_per_army: {self.human_squads_per_army}')
+        # logger.info(f'number_of_tank_squads: {number_of_tank_squads}')
+        # logger.info(f'tank_squads_per_army: {self.tank_squads_per_army}')
 
         # try:
         #     raise Exception('test')
@@ -80,6 +80,8 @@ class Country(BaseUnit):
             pack_index_start = i * self.human_squads_per_army
             pack_indexes_end = (i + 1) * self.human_squads_per_army
             human_squads_pack_indexes_cut = human_squads_pack_indexes[pack_index_start: pack_indexes_end]
+            pack_index_start = i * self.tank_squads_per_army
+            pack_indexes_end = (i + 1) * self.tank_squads_per_army
             tank_squads_pack_indexes_cut = tank_squads_pack_indexes[pack_index_start: pack_indexes_end]
             storage.Storage.add_army(
                 country_index=self.index,
@@ -91,10 +93,9 @@ class Country(BaseUnit):
 
         list_of_armies_enemy_country = storage.Storage.get_country_storage(self.index)
         list_of_armies_self_country = storage.Storage.get_country_storage(enemy_country.index)
-        print(list_of_armies_self_country)
         for self_army in list_of_armies_self_country:
             if self_army.status is WarStatuses.STATUS_DEAD:
                 break
-            enemy_army = storage.Storage.find_free_squad_in_army(list_of_armies_enemy_country)
+            enemy_army = storage.Storage.find_free_army_in_country(list_of_armies_enemy_country)
             if enemy_army:
                 self_army.attack(enemy_army)

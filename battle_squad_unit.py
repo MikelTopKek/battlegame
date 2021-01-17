@@ -1,6 +1,6 @@
 import storage
 from baseunit import BaseUnit
-from data import WarStatuses, TypeOfUnit
+from data import WarStatuses
 
 
 class Unit(BaseUnit):
@@ -26,6 +26,7 @@ class BattleUnit(Unit):
     def attack(self, enemy):
 
         enemy.health_points -= self.damage
+        # print('.......................', enemy, '...................', self)
         enemy.status = WarStatuses.STATUS_DEAD if enemy.health_points <= 0 else WarStatuses.STATUS_ALIVE
         storage.Storage.update_unit(enemy)
 
@@ -40,12 +41,18 @@ class SquadUnit(Unit):
 
     def attack(self, enemy):
         list_of_squad_self_units = storage.Storage.fill_squad(self.index)
+        if enemy.status is WarStatuses.STATUS_DEAD:
+            return
         list_of_squad_enemy_units = storage.Storage.fill_squad(enemy.index)
         if storage.Storage.squad_status(list_of_squad_enemy_units) is WarStatuses.STATUS_DEAD:
             return
-
         for self_unit in list_of_squad_self_units:
-            if self_unit.status is WarStatuses.STATUS_ALIVE:
+            if self_unit.status is WarStatuses.STATUS_ALIVE and len(list_of_squad_enemy_units) != 0:
                 enemy_unit = storage.Storage.find_free_unit_in_squad(list_of_squad_enemy_units)
-                if enemy_unit:
+                if enemy_unit == "Nope":
+                    return
+                if enemy_unit.status is not WarStatuses.STATUS_DEAD:
                     self_unit.attack(enemy_unit)
+
+        status = storage.Storage.squad_status(list_of_squad_enemy_units)
+        storage.Storage.update_squad_status(enemy, status)

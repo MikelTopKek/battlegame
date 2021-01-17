@@ -124,31 +124,52 @@ class Storage:
     @classmethod
     def find_free_unit_in_squad(cls, squad_units):
         number_of_units = len(squad_units)
-        if number_of_units == 0:
-            return WarStatuses.STATUS_DEAD
         seed()
-        while True:
-            i = randint(0, number_of_units-1)
-            if squad_units[i].status is WarStatuses.STATUS_ALIVE:
-                break
+        i = 0
+
+        if number_of_units > 1:
+            while squad_units[i].status is not WarStatuses.STATUS_ALIVE:
+                i = randint(0, number_of_units-1)
+            if i >= number_of_units-1:
+                return "Nope"
         return squad_units[i]
+
+    @classmethod
+    def update_squad_status(cls, squad, status):
+        cls.list_of_squads[squad.index].status = status
 
     @classmethod
     def squad_status(cls, squad):
         if len(squad) == 0:
             return WarStatuses.STATUS_DEAD
-        return WarStatuses.STATUS_ALIVE
+
+        for unit in squad:
+            if unit.status is WarStatuses.STATUS_ALIVE:
+                return WarStatuses.STATUS_ALIVE
+
+        return WarStatuses.STATUS_DEAD
 
     @classmethod
-    def find_free_squad_in_army(cls, army_squads):
+    def is_army_dead(cls, army_index):
+        for squad in cls.list_of_squads:
+            if squad.army_index == army_index and squad.status is WarStatuses.STATUS_ALIVE:
+                return False
+        return True
+
+    @classmethod
+    def find_free_squad_in_army(cls, army_squads, army_index):
         number_of_squads = len(army_squads)
         seed()
-        if number_of_squads == 0:
+        if number_of_squads == 0 or cls.is_army_dead(army_index):
             return WarStatuses.STATUS_DEAD
-        while True:
-            i = randint(0, number_of_squads-1)
-            if army_squads[i].status is WarStatuses.STATUS_ALIVE:
-                break
+        i = 0
+        if number_of_squads > 1:
+            while True:
+                i = randint(0, number_of_squads-1)
+                if army_squads[i].status is WarStatuses.STATUS_ALIVE:
+                    break
+            if i >= number_of_squads-1:
+                return "Nope"
         return army_squads[i]
 
     @classmethod
@@ -157,6 +178,7 @@ class Storage:
         for squad in Storage.list_of_squads:
             if squad.army_index == army_index:
                 storage.append(squad)
+
         return storage
 
     @classmethod
@@ -165,7 +187,6 @@ class Storage:
         for cur_army in Storage.list_of_armies:
             if cur_army.country_index == country_index:
                 storage.append(cur_army)
-            print(cur_army.index, ' ', country_index)
 
         return storage
 
@@ -180,3 +201,17 @@ class Storage:
             if army_of_the_country[i].status is WarStatuses.STATUS_ALIVE:
                 break
         return army_of_the_country[i]
+
+    @classmethod
+    def update_army_status(cls, my_army):
+        if cls.is_army_dead(my_army.index):
+            cls.list_of_armies[my_army.index].status = WarStatuses.STATUS_DEAD
+        else:
+            cls.list_of_armies[my_army.index].status = WarStatuses.STATUS_ALIVE
+
+    @classmethod
+    def squad_accessory_to_human(cls, squad):
+        if isinstance(squad, human_tank_and_their_squads.HumanSquad):
+            return True
+        else:
+            return False

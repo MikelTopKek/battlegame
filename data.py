@@ -2,22 +2,22 @@ from enum import Enum
 
 COUNTRY_DATA = [
     {
-        'index': 'test',
-        'name': 'TEST',
-        'human_count': 9,
-        'tank_count': 5,
-        'tank_per_squad': 1,
-        'human_per_squad': 2,
+        'index': 'gondurass',
+        'name': 'GONDURASS',
+        'human_count': 19,
+        'tank_count': 8,
+        'tank_per_squad': 2,
+        'human_per_squad': 3,
         'human_squads_per_army': 3,
         'tank_squads_per_army': 2
     },
     {
         'index': 'TheKek',
         'name': 'TheKek',
-        'human_count': 6,
-        'tank_count': 3,
-        'tank_per_squad': 1,
-        'human_per_squad': 1,
+        'human_count': 65,
+        'tank_count': 7,
+        'tank_per_squad': 2,
+        'human_per_squad': 4,
         'human_squads_per_army': 2,
         'tank_squads_per_army': 1
     },
@@ -37,8 +37,3 @@ COUNTRY_DATA = [
 class WarStatuses(Enum):
     STATUS_DEAD = 0
     STATUS_ALIVE = 1
-
-
-class TypeOfUnit(Enum):
-    TYPE_HUMAN = 0
-    TYPE_TANK = 1
