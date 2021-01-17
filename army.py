@@ -5,6 +5,7 @@ from data import WarStatuses
 
 class Army(Unit):
     country_index: int
+    status = WarStatuses.STATUS_ALIVE
 
     def __init__(self, country_index, index):
         super().__init__(index=index)
