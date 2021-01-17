@@ -39,12 +39,13 @@ class SquadUnit(Unit):
         self.index = index
 
     def attack(self, enemy):
-        list_of_squad_units_self = storage.Storage.fill_squad(self.index)
-        list_of_squad_units_enemy = storage.Storage.fill_squad(enemy.index)
-        if storage.Storage.squad_status(list_of_squad_units_enemy) is WarStatuses.STATUS_DEAD:
+        list_of_squad_self_units = storage.Storage.fill_squad(self.index)
+        list_of_squad_enemy_units = storage.Storage.fill_squad(enemy.index)
+        if storage.Storage.squad_status(list_of_squad_enemy_units) is WarStatuses.STATUS_DEAD:
             return
 
-        for self_unit in list_of_squad_units_self:
+        for self_unit in list_of_squad_self_units:
             if self_unit.status is WarStatuses.STATUS_ALIVE:
-                enemy_unit = storage.Storage.find_free_unit_in_squad(list_of_squad_units_enemy)
-                self_unit.attack(enemy_unit)
+                enemy_unit = storage.Storage.find_free_unit_in_squad(list_of_squad_enemy_units)
+                if enemy_unit:
+                    self_unit.attack(enemy_unit)

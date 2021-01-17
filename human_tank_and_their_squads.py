@@ -1,9 +1,9 @@
 import random
 
-import unit
+import battle_squad_unit
 
 
-class Human(unit.BattleUnit):
+class Human(battle_squad_unit.BattleUnit):
 
     def __init__(self, *args, **kwargs):
         super(Human, self).__init__(*args, **kwargs)
@@ -18,7 +18,7 @@ class Human(unit.BattleUnit):
                f'squad_index -> {self.squad_index}>'
 
 
-class Tank(unit.BattleUnit):
+class Tank(battle_squad_unit.BattleUnit):
     health_points = 400
 
     def __init__(self, *args, **kwargs):
@@ -33,7 +33,7 @@ class Tank(unit.BattleUnit):
                f'squad_index -> {self.squad_index}>'
 
 
-class TanksSquad(unit.SquadUnit):
+class TanksSquad(battle_squad_unit.SquadUnit):
     # get_storage_status = ""
 
     def __str__(self):
@@ -41,7 +41,7 @@ class TanksSquad(unit.SquadUnit):
                f'Army index: {self.army_index}>'
 
 
-class HumanSquad(unit.SquadUnit):
+class HumanSquad(battle_squad_unit.SquadUnit):
     # get_storage_status = "human_squad_status"
 
     def __str__(self):
