@@ -13,15 +13,19 @@ class Army(Unit):
         self.index = index
 
     def attack(self, enemy_army):
-        list_of_squads_enemy_army = storage.Storage.get_army_storage(self.index)
-        list_of_squads_self_army = storage.Storage.get_army_storage(enemy_army.index)
-
+        list_of_squads_enemy_army = storage.Storage.get_army_storage(enemy_army.index)
+        list_of_squads_self_army = storage.Storage.get_army_storage(self.index)
+        if len(list_of_squads_enemy_army) == 0 or len(list_of_squads_self_army) == 0:
+            return
         for self_squad in list_of_squads_self_army:
-            if self_squad.status is WarStatuses.STATUS_DEAD:
+            if self_squad.status is WarStatuses.STATUS_DEAD or len(list_of_squads_enemy_army) == 0:
                 break
-            enemy_squad = storage.Storage.find_free_squad_in_army(list_of_squads_enemy_army)
-            if enemy_squad:
+            enemy_squad = storage.Storage.find_free_squad_in_army(list_of_squads_enemy_army, self.index)
+            if enemy_squad == "Nope":
+                return
+            if enemy_squad.status is not WarStatuses.STATUS_DEAD:
                 self_squad.attack(enemy_squad)
+        storage.Storage.update_army_status(enemy_army)
 
     def __str__(self):
         return f'<Army [{self.index}]: ' \
