@@ -1,12 +1,12 @@
 import army
 import countries
 import human_tank_and_their_squads
-from data import WarStatuses, TypeOfUnit
+from data import WarStatuses
 from random import randint, seed
 
 
 class Storage:
-    armies: list = list()
+    list_of_armies: list = list()
     list_of_units = list()
     list_of_squads = list()
     countries = list()
@@ -75,7 +75,7 @@ class Storage:
 
     @classmethod
     def add_army(cls, country_index, human_squads_pack_indexes, tank_squads_pack_indexes) -> int:
-        cls.armies.append(
+        cls.list_of_armies.append(
             army.Army(index=cls._current_army_index, country_index=country_index)
         )
         cls.set_army_to_squad(
@@ -152,15 +152,31 @@ class Storage:
         return army_squads[i]
 
     @classmethod
-    def get_army_storage(cls, my_army_index):
+    def get_army_storage(cls, army_index):
         storage = list()
         for squad in Storage.list_of_squads:
-            if squad.army_index == my_army_index:
-                storage.append(squad)
-
-        for squad in Storage.list_of_squads:
-            if squad.army_index == my_army_index:
+            if squad.army_index == army_index:
                 storage.append(squad)
         return storage
 
+    @classmethod
+    def get_country_storage(cls, country_index):
+        storage = list()
+        for cur_army in Storage.list_of_armies:
+            if cur_army.country_index == country_index:
+                storage.append(cur_army)
+            print(cur_army.index, ' ', country_index)
 
+        return storage
+
+    @classmethod
+    def find_free_army_in_country(cls, army_of_the_country):
+        number_of_armies = len(army_of_the_country)
+        seed()
+        if number_of_armies == 0:
+            return WarStatuses.STATUS_DEAD
+        while True:
+            i = randint(0, number_of_armies-1)
+            if army_of_the_country[i].status is WarStatuses.STATUS_ALIVE:
+                break
+        return army_of_the_country[i]

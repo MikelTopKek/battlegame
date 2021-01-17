@@ -3,6 +3,7 @@ from math import ceil
 
 from baseunit import BaseUnit
 import storage
+from data import WarStatuses
 
 logger = logging.getLogger(__name__)
 
@@ -86,5 +87,14 @@ class Country(BaseUnit):
                 tank_squads_pack_indexes=tank_squads_pack_indexes_cut
             )
 
-    def attack(self, *args, **kwargs):
-        pass
+    def attack(self, enemy_country):
+
+        list_of_armies_enemy_country = storage.Storage.get_country_storage(self.index)
+        list_of_armies_self_country = storage.Storage.get_country_storage(enemy_country.index)
+        print(list_of_armies_self_country)
+        for self_army in list_of_armies_self_country:
+            if self_army.status is WarStatuses.STATUS_DEAD:
+                break
+            enemy_army = storage.Storage.find_free_squad_in_army(list_of_armies_enemy_country)
+            if enemy_army:
+                self_army.attack(enemy_army)
