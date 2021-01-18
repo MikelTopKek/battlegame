@@ -33,9 +33,8 @@ class War:
         seed()
         battle_list = [i for i in range(self.number_of_countries)]
         shuffle(battle_list)
-        if self.number_of_countries % 2 != 0:
+        battle_list.append(randint(0, self.number_of_countries-1))
+        while battle_list[-1] == battle_list[-2]:
+            battle_list.pop()
             battle_list.append(randint(0, self.number_of_countries-1))
-            while battle_list[-1] == battle_list[-2]:
-                battle_list.pop()
-                battle_list.append(randint(0, self.number_of_countries-1))
         return battle_list
