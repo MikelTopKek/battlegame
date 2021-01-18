@@ -23,7 +23,7 @@ def test_human_creation(human_count):
 #     Storage.add_humans(1)
 
 
-@patch('units.random.randint')
+@patch('human_tank_and_their_squads.random.randint')
 def test_human_health_creation(mocked_randint):
     mocked_health_points = 4
     mocked_randint.side_effect = lambda *args, **kwargs: mocked_health_points
@@ -39,3 +39,43 @@ def test_human_health_creation(mocked_randint):
 #     w.generate()
 #
 #     assert ...
+
+
+def test_tank_creation():
+    assert True
+
+
+def test_tank_hp():
+    assert True
+
+
+def test_country_creation():
+    assert True
+
+
+def test_human_squad_creation():
+    assert True
+
+
+def test_tank_squad_creation():
+    assert True
+
+
+def test_army_creation():
+    assert True
+
+
+def test_battleunit_attack():
+    assert True
+
+
+def test_squad_attack():
+    assert True
+
+
+def test_army_attack():
+    assert True
+
+
+def test_country_attack():
+    assert True

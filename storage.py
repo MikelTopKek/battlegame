@@ -1,8 +1,10 @@
+from random import randint
+
 import army
 import countries
 import human_tank_and_their_squads
 from data import WarStatuses
-from random import randint, seed
+from exceptions import EmptySquadList
 
 
 class Storage:
@@ -16,10 +18,18 @@ class Storage:
     _current_army_index = 0
 
     @classmethod
-    def add_country(cls, name, index, human_count, tank_count, tank_per_squad, human_per_squad,
-                    human_squads_per_army, tank_squads_per_army):
-        cls.countries.append(countries.Country(name, index, human_count, tank_count, tank_per_squad, human_per_squad,
-                                               human_squads_per_army, tank_squads_per_army))
+    def add_country(
+            cls, name, index,
+            human_count, tank_count, tank_per_squad,
+            human_per_squad, human_squads_per_army, tank_squads_per_army):
+
+        cls.countries.append(
+            countries.Country(
+                name, index, human_count,
+                tank_count, tank_per_squad, human_per_squad,
+                human_squads_per_army, tank_squads_per_army
+            )
+        )
 
     @classmethod
     def add_humans(cls, number_of_humans) -> list:
@@ -124,12 +134,11 @@ class Storage:
     @classmethod
     def find_free_unit_in_squad(cls, squad_units):
         number_of_units = len(squad_units)
-        seed()
         i = 0
         if number_of_units > 1:
             while squad_units[i].status is not WarStatuses.STATUS_ALIVE:
-                i = randint(0, number_of_units-1)
-            if i >= number_of_units-1:
+                i = randint(0, number_of_units - 1)
+            if i >= number_of_units - 1:
                 return False
         return squad_units[i]
 
@@ -158,16 +167,15 @@ class Storage:
     @classmethod
     def find_free_squad_in_army(cls, army_squads, army_index):
         number_of_squads = len(army_squads)
-        seed()
         if number_of_squads == 0 or cls.is_army_dead(army_index):
             return WarStatuses.STATUS_DEAD
         i = 0
         if number_of_squads > 1:
             while True:
-                i = randint(0, number_of_squads-1)
+                i = randint(0, number_of_squads - 1)
                 if army_squads[i].status is WarStatuses.STATUS_ALIVE:
                     break
-            if i >= number_of_squads-1:
+            if i >= number_of_squads - 1:
                 return False
         return army_squads[i]
 
@@ -177,6 +185,8 @@ class Storage:
         for squad in Storage.list_of_squads:
             if squad.army_index == army_index:
                 storage.append(squad)
+        if not storage:
+            raise EmptySquadList
 
         return storage
 
@@ -192,11 +202,10 @@ class Storage:
     @classmethod
     def find_free_army_in_country(cls, army_of_the_country):
         number_of_armies = len(army_of_the_country)
-        seed()
         if number_of_armies == 0:
             return WarStatuses.STATUS_DEAD
         while True:
-            i = randint(0, number_of_armies-1)
+            i = randint(0, number_of_armies - 1)
             if army_of_the_country[i].status is WarStatuses.STATUS_ALIVE:
                 break
         return army_of_the_country[i]
@@ -208,10 +217,7 @@ class Storage:
         else:
             cls.list_of_armies[my_army.index].status = WarStatuses.STATUS_ALIVE
 
-    # If isistance() is True - its a human squad, else - tank squad
     @classmethod
     def squad_accessory_to_human(cls, squad):
-        if isinstance(squad, human_tank_and_their_squads.HumanSquad):
-            return True
-        else:
-            return False
+        """If isinstance() is True - it's a human squad, else - tank squad"""
+        return isinstance(squad, human_tank_and_their_squads.HumanSquad)

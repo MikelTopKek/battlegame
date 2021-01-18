@@ -24,7 +24,6 @@ class BattleUnit(Unit):
         self.squad_index = 0
 
     def attack(self, enemy):
-
         enemy.health_points -= self.damage
         enemy.status = WarStatuses.STATUS_DEAD if enemy.health_points <= 0 else WarStatuses.STATUS_ALIVE
         storage.Storage.update_unit(enemy)
