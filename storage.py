@@ -126,12 +126,11 @@ class Storage:
         number_of_units = len(squad_units)
         seed()
         i = 0
-
         if number_of_units > 1:
             while squad_units[i].status is not WarStatuses.STATUS_ALIVE:
                 i = randint(0, number_of_units-1)
             if i >= number_of_units-1:
-                return "Nope"
+                return False
         return squad_units[i]
 
     @classmethod
@@ -169,7 +168,7 @@ class Storage:
                 if army_squads[i].status is WarStatuses.STATUS_ALIVE:
                     break
             if i >= number_of_squads-1:
-                return "Nope"
+                return False
         return army_squads[i]
 
     @classmethod
@@ -209,6 +208,7 @@ class Storage:
         else:
             cls.list_of_armies[my_army.index].status = WarStatuses.STATUS_ALIVE
 
+    # If isistance() is True - its a human squad, else - tank squad
     @classmethod
     def squad_accessory_to_human(cls, squad):
         if isinstance(squad, human_tank_and_their_squads.HumanSquad):

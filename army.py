@@ -21,7 +21,7 @@ class Army(Unit):
             if self_squad.status is WarStatuses.STATUS_DEAD or len(list_of_squads_enemy_army) == 0:
                 break
             enemy_squad = storage.Storage.find_free_squad_in_army(list_of_squads_enemy_army, self.index)
-            if enemy_squad == "Nope":
+            if not enemy_squad:
                 return
             if enemy_squad.status is not WarStatuses.STATUS_DEAD:
                 self_squad.attack(enemy_squad)
