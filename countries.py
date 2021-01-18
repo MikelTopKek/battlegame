@@ -4,6 +4,7 @@ from math import ceil
 from baseunit import BaseUnit
 import storage
 from data import WarStatuses
+from exceptions import ArmyIsDeadException
 
 logger = logging.getLogger(__name__)
 
@@ -80,9 +81,11 @@ class Country(BaseUnit):
             pack_index_start = i * self.human_squads_per_army
             pack_indexes_end = (i + 1) * self.human_squads_per_army
             human_squads_pack_indexes_cut = human_squads_pack_indexes[pack_index_start: pack_indexes_end]
+
             pack_index_start = i * self.tank_squads_per_army
             pack_indexes_end = (i + 1) * self.tank_squads_per_army
             tank_squads_pack_indexes_cut = tank_squads_pack_indexes[pack_index_start: pack_indexes_end]
+
             storage.Storage.add_army(
                 country_index=self.index,
                 human_squads_pack_indexes=human_squads_pack_indexes_cut,
@@ -90,7 +93,6 @@ class Country(BaseUnit):
             )
 
     def attack(self, enemy_country):
-
         list_of_armies_enemy_country = storage.Storage.get_country_storage(self.index)
         list_of_armies_self_country = storage.Storage.get_country_storage(enemy_country.index)
         for self_army in list_of_armies_self_country:
@@ -98,4 +100,7 @@ class Country(BaseUnit):
                 break
             enemy_army = storage.Storage.find_free_army_in_country(list_of_armies_enemy_country)
             if enemy_army:
-                self_army.attack(enemy_army)
+                try:
+                    self_army.attack(enemy_army)
+                except ArmyIsDeadException as exc:
+                    logger.info(f"Army with index {exc.army_id} is dead")

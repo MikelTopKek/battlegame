@@ -13,7 +13,6 @@ class War:
             self.number_of_countries += 1
 
     def start_battle(self):
-
         battle_list = self.generate_opponents_distribution()
         print(battle_list)
         j = 0
@@ -24,6 +23,7 @@ class War:
                 for self_country in list_of_armies_self_country:
                     if self_country.status is WarStatuses.STATUS_DEAD:
                         break
+                    # TODO:::country should attack country!!!
                     enemy_country = Storage.find_free_army_in_country(list_of_armies_enemy_country)
                     if enemy_country:
                         self_country.attack(enemy_country)
